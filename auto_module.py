@@ -9,7 +9,7 @@ def get_edge(img):
 
 def get_roi(img):
     mask = np.zeros_like(img)          # 全黑遮罩
-    points = np.array([[[146, 539],     # 建立多邊形座標
+    points = np.array([[[146, 539],     
                         [781, 539],
                         [515, 417],
                         [296, 397]]])
@@ -17,17 +17,17 @@ def get_roi(img):
     roi = cv2.bitwise_and(img, mask)
     return roi
 
-def draw_lines(img, lines):                 # 建立自訂函式
+def draw_lines(img, lines):             
     for line in lines:
         points = line.reshape(4,)       # 降成一維 shape = (4,)
         x1, y1, x2, y2 = points         # 取出直線座標
-        cv2.line(img,                   # 繪製直線
+        cv2.line(img,                  
                  (x1, y1), (x2, y2),
                  (0, 0, 255), 3)
     return img
 
 def get_avglines(lines):
-    if lines is None:                   # 如果有找到線段
+    if lines is None:                 
         print('偵測不到直線線段')
         return None
     #-----↓先依斜率分到左組或右組↓
@@ -46,7 +46,7 @@ def get_avglines(lines):
     #-----↓再計算左組與右組的平圴線↓
     if rights and lefts:     # 必須同時有左右兩邊的直線函數
         right_avg = np.average(rights, axis=0)    # 取得右邊的平均直線
-        left_avg = np.average(lefts, axis=0)      # 取得左邊的平均直線
+        left_avg = np.average(lefts, axis=0)      
         return np.array([right_avg, left_avg])
     else:
         print('無法同時偵測到左右邊緣')
